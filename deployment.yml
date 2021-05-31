@@ -1,0 +1,29 @@
+---
+- hosts: all
+  become: yes
+  vars:
+    dockerImage: "mdanwarjamal/bootcamp10-case-study"
+    tagName: "1.0"
+    containerName: "bootcamp10-case-study-spring-app"
+    applicationPort: "7777"
+  tasks:
+  - name: Installing Docker
+    apt:
+      pkg: docker.io
+      state: present
+    notify:
+    - apt cache update
+  - name: Starting Docker Service
+    service:
+      name: docker
+      state: started
+      enabled: yes
+  - name: Pulling Docker Image from DockerHub
+    command: sudo docker pull {{ dockerImage }}:{{ tagName }}
+  - name: Deploying Spring Boot Application
+    command: sudo docker run -d -p {{ applicationPort }}:8888 --name {{ containerName }} {{ dockerImage }}:{{ tagName }}
+  handlers:
+  - name: apt cache update
+    apt:
+      update_cache: yes
+...
