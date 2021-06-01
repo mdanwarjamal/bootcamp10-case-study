@@ -5,7 +5,7 @@
     dockerImage: "mdanwarjamal/bootcamp10-case-study"
     tagName: "1.0"
     containerName: "bootcamp10-case-study-spring-app"
-    applicationPort: "8888"
+    applicationPort: "7777"
   tasks:
   - name: Installing Docker
     apt:
@@ -20,8 +20,6 @@
       enabled: yes
   - name: Pulling Docker Image from DockerHub
     command: sudo docker pull {{ dockerImage }}:{{ tagName }}
-  - name: Removing existing containers
-    command: sudo docker rm -f ($sudo docker ps -aq)
   - name: Deploying Spring Boot Application
     command: sudo docker run -d -p {{ applicationPort }}:8888 --name {{ containerName }} {{ dockerImage }}:{{ tagName }}
   handlers:
