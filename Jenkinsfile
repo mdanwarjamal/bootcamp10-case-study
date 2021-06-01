@@ -37,12 +37,12 @@ try{
                 sh "${mavenCMD} compile"
             }
             stage('test'){
-                echo "Test Application Code"
+                echo "Run Test Cases for Application"
                 sh "${mavenCMD} clean test"
             }
-            stage('publish html report'){
-                echo "pubishing html report"
-                publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
+            stage('publish surefire html report'){
+                echo "Publish HTML Surefire Report for Junit"
+                publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/site', reportFiles: 'index.html', reportName: 'HTML Surefire Report', reportTitles: 'Junit Test Reports'])
             }
             stage('package'){
                 echo "Generate jar file for Application"
@@ -60,8 +60,8 @@ try{
                 }
             }
             stage('Deploy Application using Ansible'){
-                echo "Install Docker in Ansible host machines"
-                echo "deploying spring application"
+                echo "Installing Docker in Ansible host machines"
+                echo "Deploying Spring Application using Ansible Playbooks"
                 ansiblePlaybook credentialsId: 'Ansible', disableHostKeyChecking: true, installation: 'sysAnsible', inventory: '/etc/ansible/hosts', playbook: 'deployment.yml'
             }
             currentBuild.result = 'SUCCESS'
