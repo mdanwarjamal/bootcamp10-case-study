@@ -38,11 +38,20 @@ try{
             }
             stage('test'){
                 echo "Run Test Cases for Application"
+		echo "Run Code Coverage Test using Jacoco"
                 sh "${mavenCMD} clean test"
             }
+	    stage('publish jacoco coverage test HTML reports'){
+		echo "Publish Jacoco Coverage HTML Reports"
+                publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'target/site/jacoco', reportFiles: 'index.html,jacoco-sessions.html', reportName: 'HTML Jacoco Report', reportTitles: ''])
+	    }
+	    stage('surefire-test'){
+		echo "Generate Surefire Test Reports"
+	    	sh "${mavenCMD} site"
+	    }
             stage('publish surefire html report'){
                 echo "Publish HTML Surefire Report for Junit"
-                publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/site', reportFiles: 'index.html', reportName: 'HTML Surefire Report', reportTitles: 'Junit Test Reports'])
+                publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'target/site', reportFiles: 'surefire-report.html,dependencies.html,dependency-management.html,dependency-info.html', reportName: 'HTML Surefire Report', reportTitles: ''])
             }
             stage('package'){
                 echo "Generate jar file for Application"
