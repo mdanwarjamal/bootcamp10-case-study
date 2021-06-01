@@ -30,7 +30,7 @@ try{
             }
             stage('checkout'){
                 echo "Checkout Application Code from GitHub Repository"
-                git branch: 'main', credentialsId: 'GitHubSSH', url: "${gitSSH}/${projectName}.git"
+                git branch: 'feature/htmlReport', credentialsId: 'GitHubSSH', url: "${gitSSH}/${projectName}.git"
             }
             stage('build'){
                 echo "Build Application Code"
