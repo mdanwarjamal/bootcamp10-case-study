@@ -36,27 +36,22 @@ try{
                 echo "Build Application Code"
                 sh "${mavenCMD} compile"
             }
-            stage('test'){
-                echo "Run Test Cases for Application"
-		echo "Run Code Coverage Test using Jacoco"
-                sh "${mavenCMD} clean test"
+            stage('package'){
+                echo "Generate jar file for Application"
+                sh "${mavenCMD} clean package"
             }
-	    stage('publish jacoco coverage test HTML reports'){
-		echo "Publish Jacoco Coverage HTML Reports"
-                publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'target/site/jacoco', reportFiles: 'index.html,jacoco-sessions.html', reportName: 'HTML Jacoco Report', reportTitles: ''])
-	    }
 	    stage('surefire-test'){
 		echo "Generate Surefire Test Reports"
-	    	sh "${mavenCMD} site"
+	    	sh "${mavenCMD} test site"
 	    }
             stage('publish surefire html report'){
                 echo "Publish HTML Surefire Report for Junit"
                 publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'target/site', reportFiles: 'surefire-report.html,dependencies.html,dependency-management.html,dependency-info.html', reportName: 'HTML Surefire Report', reportTitles: ''])
             }
-            stage('package'){
-                echo "Generate jar file for Application"
-                sh "${mavenCMD} clean package"
-            }
+	    stage('publish jacoco coverage test HTML reports'){
+		echo "Publish Jacoco Coverage HTML Reports"
+		publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'target/site/jacoco', reportFiles: 'index.html,jacoco-sessions.html', reportName: 'HTML Jacoco Report', reportTitles: ''])
+	    }
             stage('build docker image'){
                 echo "Build Docker image from Dockerfile"
                 sh "${dockerCMD} build -t ${dockerImage}:${tagName} ."
