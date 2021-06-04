@@ -33,7 +33,7 @@ try{
             }
             stage('test'){
                 echo "Test Application Code"
-                sh "${mavenCMD} test -o site"
+                sh "${mavenCMD} test site"
             }
             stage('publish surefire html report'){
                 echo "Publish HTML Surefire Report for Junit"
