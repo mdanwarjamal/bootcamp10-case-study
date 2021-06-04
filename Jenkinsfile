@@ -42,29 +42,21 @@ try{
                 echo "Publish HTML Surefire Report for Junit"
                 publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'target/site', reportFiles: 'surefire-report.html', reportName: 'HTML Surefire Report', reportTitles: ''])
             }
-//       	    stage('publish jacoco coverage test HTML reports'){
-//             		echo "Publish Jacoco Coverage HTML Reports"
-//             		publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'target/site/jacoco', reportFiles: 'index.html,jacoco-sessions.html', reportName: 'HTML Jacoco Report', reportTitles: ''])
-//       	    }
-            stage('start Docker'){
-               sh "sudo service {dockerCMD} start"
-               sh "sudo systemctl enable ${dockerCMD}"
-            }
             stage('build docker image'){
                 echo "Build Docker image from Dockerfile"
-                sh "${dockerCMD} build -t ${dockerImage}:${tagName} ."
+                sh "sudo ${dockerCMD} build -t ${dockerImage}:${tagName} ."
             }
             stage('Push to DockerHub'){
                 echo "Push Docker Image to DockerHub Online Registry"
                 withCredentials([usernamePassword(credentialsId: 'DockerHub', passwordVariable: 'dockerHubPwd', usernameVariable: 'dockerHubUsername')]) {
-                    sh "${dockerCMD} login -u ${dockerHubUsername}  -p ${dockerHubPwd}"
-                    sh "${dockerCMD} push  ${dockerImage}:${tagName}"
+                    sh "sudo ${dockerCMD} login -u ${dockerHubUsername}  -p ${dockerHubPwd}"
+                    sh "sudo ${dockerCMD} push  ${dockerImage}:${tagName}"
                 }
             }
             stage('Deploy Application using Ansible'){
                 echo "Install Docker in Ansible host machines"
                 echo "deploying spring application"
-                ansiblePlaybook credentialsId: 'Ansible', disableHostKeyChecking: true, installation: 'myAnsible', inventory: '/etc/ansible/hosts', playbook: 'deployment.yml'
+                ansiblePlaybook credentialsId: 'Ansible', disableHostKeyChecking: true, installation: 'myAnsible', inventory: 'myInventory', playbook: 'deployment.yml'
             }
             stage('Send mail on success'){
         	    	echo "Deployment was successful"
