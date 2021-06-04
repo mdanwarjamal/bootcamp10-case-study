@@ -22,14 +22,6 @@ try{
             stage('checkout'){
                 echo "Checkout Application Code from GitHub Repository"
                 git branch: 'main', credentialsId: 'GitHub', url: "${gitURL}/${projectName}.git"
-            }
-            stage('sonarqube'){
-		withSonarQubeEnv('sonarqube') {
-			sh "${mavenCMD} sonar:sonar"
-		}	
-	    }
-	    stage('install'){
-		sh "${mavenCMD} clean install"	
 	    }
             stage('build'){
                 echo "Build Application Code"
@@ -39,6 +31,11 @@ try{
                 echo "Generate jar file for Application"
                 sh "${mavenCMD} clean package"
             }
+	    stage('sonarqube'){
+		withSonarQubeEnv('sonarqube') {
+			sh "${mavenCMD} sonar:sonar"
+		}
+	    }
 	    stage('surefire test'){
 		    sh "${mavenCMD} surefire-report:report"
 	    }
