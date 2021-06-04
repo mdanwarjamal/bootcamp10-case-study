@@ -33,16 +33,19 @@ try{
             }
             stage('test'){
                 echo "Test Application Code"
-                sh "${mavenCMD} test site"
+                sh "${mavenCMD} test"
             }
-            stage('publish surefire html report'){
+	    stage('surefire test'){
+		    sh "${mavenCMD} surefire-report:report"
+	    }
+	    stage('publish surefire html report'){
                 echo "Publish HTML Surefire Report for Junit"
-                publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'target/site', reportFiles: 'surefire-report.html,dependencies.html,dependency-management.html,dependency-info.html', reportName: 'HTML Surefire Report', reportTitles: ''])
+                publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'target/site', reportFiles: 'surefire-report.html', reportName: 'HTML Surefire Report', reportTitles: ''])
             }
-      	    stage('publish jacoco coverage test HTML reports'){
-            		echo "Publish Jacoco Coverage HTML Reports"
-            		publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'target/site/jacoco', reportFiles: 'index.html,jacoco-sessions.html', reportName: 'HTML Jacoco Report', reportTitles: ''])
-      	    }
+//       	    stage('publish jacoco coverage test HTML reports'){
+//             		echo "Publish Jacoco Coverage HTML Reports"
+//             		publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'target/site/jacoco', reportFiles: 'index.html,jacoco-sessions.html', reportName: 'HTML Jacoco Report', reportTitles: ''])
+//       	    }
             stage('start Docker'){
                sh "sudo service {dockerCMD} start"
                sh "sudo systemctl enable ${dockerCMD}"
