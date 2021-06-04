@@ -23,6 +23,14 @@ try{
                 echo "Checkout Application Code from GitHub Repository"
                 git branch: 'main', credentialsId: 'GitHub', url: "${gitURL}/${projectName}.git"
             }
+            stage('sonarqube'){
+		withSonarQubeEnv('sonarqube') {
+			sh "${mavenCMD} sonar:sonar"
+		}	
+	    }
+	    stage('install'){
+		sh "${mavenCMD} clean install"	
+	    }
             stage('build'){
                 echo "Build Application Code"
                 sh "${mavenCMD} compile"
