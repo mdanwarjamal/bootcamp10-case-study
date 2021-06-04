@@ -3,7 +3,7 @@
   become: yes
   vars:
     dockerImage: "mdanwarjamal/bootcamp10-case-study"
-    tagName: "1.0"
+    tagName: "2.0"
     containerName: "bootcamp10-case-study-spring-app"
     applicationPort: "7777"
   tasks:
