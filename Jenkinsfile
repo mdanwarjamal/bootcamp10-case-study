@@ -21,7 +21,7 @@ try{
             }
             stage('checkout'){
                 echo "Checkout Application Code from GitHub Repository"
-                git branch: 'feature/htmlReport', credentialsId: 'GitHub', url: "${gitURL}/${projectName}.git"
+                git branch: 'main', credentialsId: 'GitHub', url: "${gitURL}/${projectName}.git"
             }
             stage('build'){
                 echo "Build Application Code"
