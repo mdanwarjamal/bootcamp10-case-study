@@ -1,0 +1,370 @@
+Started by GitHub push by mdanwarjamal
+Obtained Jenkinsfile from git https://github.com/mdanwarjamal/bootcamp10-case-study.git
+Running in Durability level: PERFORMANCE_OPTIMIZED
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/lib/jenkins/workspace/Bootcamp Case Study CI-CD
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (prepare)
+[Pipeline] echo
+Prepare Tools and Variables to be used in Pipeline Script
+[Pipeline] tool
+[Pipeline] tool
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (checkout)
+[Pipeline] echo
+Checkout Application Code from GitHub Repository
+[Pipeline] git
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+using credential GitHub
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/Bootcamp Case Study CI-CD/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/mdanwarjamal/bootcamp10-case-study.git # timeout=10
+Fetching upstream changes from https://github.com/mdanwarjamal/bootcamp10-case-study.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.17.1'
+using GIT_ASKPASS to set credentials GitHub Login HTTPS
+ > git fetch --tags --progress -- https://github.com/mdanwarjamal/bootcamp10-case-study.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 74dff8fbdcff592ec11b7195a3cf7fae19a9c13a (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 74dff8fbdcff592ec11b7195a3cf7fae19a9c13a # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git branch -D main # timeout=10
+ > git checkout -b main 74dff8fbdcff592ec11b7195a3cf7fae19a9c13a # timeout=10
+Commit message: "Update Dockerfile"
+ > git rev-list --no-walk 7478c57173b57c0916a5811a9a782fb6e9f12eb1 # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (build)
+[Pipeline] echo
+Build Application Code
+[Pipeline] sh
++ /var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation/myMaven/bin/mvn compile
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -----------------------< com.casestudy:bootcamp >-----------------------
+[INFO] Building bootcamp 0.0.1-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:resources (default-resources) @ bootcamp ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.1:compile (default-compile) @ bootcamp ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  2.210 s
+[INFO] Finished at: 2021-06-04T10:51:40Z
+[INFO] ------------------------------------------------------------------------
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (package)
+[Pipeline] echo
+Generate jar file for Application
+[Pipeline] sh
++ /var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation/myMaven/bin/mvn clean package
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -----------------------< com.casestudy:bootcamp >-----------------------
+[INFO] Building bootcamp 0.0.1-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:3.1.0:clean (default-clean) @ bootcamp ---
+[INFO] Deleting /var/lib/jenkins/workspace/Bootcamp Case Study CI-CD/target
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:resources (default-resources) @ bootcamp ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.1:compile (default-compile) @ bootcamp ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 2 source files to /var/lib/jenkins/workspace/Bootcamp Case Study CI-CD/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:testResources (default-testResources) @ bootcamp ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /var/lib/jenkins/workspace/Bootcamp Case Study CI-CD/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.1:testCompile (default-testCompile) @ bootcamp ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 1 source file to /var/lib/jenkins/workspace/Bootcamp Case Study CI-CD/target/test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.22.2:test (default-test) @ bootcamp ---
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.TestMessageController
+10:51:48.441 [main] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
+10:51:48.479 [main] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
+10:51:48.518 [main] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [com.TestMessageController] from class [org.springframework.boot.test.context.SpringBootTestContextBootstrapper]
+10:51:48.547 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.TestMessageController], using SpringBootContextLoader
+10:51:48.561 [main] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.TestMessageController]: class path resource [com/TestMessageController-context.xml] does not exist
+10:51:48.561 [main] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.TestMessageController]: class path resource [com/TestMessageControllerContext.groovy] does not exist
+10:51:48.561 [main] INFO org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [com.TestMessageController]: no resource found for suffixes {-context.xml, Context.groovy}.
+10:51:48.565 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.TestMessageController]: TestMessageController does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+10:51:48.660 [main] DEBUG org.springframework.test.context.support.ActiveProfilesUtils - Could not find an 'annotation declaring class' for annotation type [org.springframework.test.context.ActiveProfiles] and class [com.TestMessageController]
+10:51:48.851 [main] DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider - Identified candidate component class: file [/var/lib/jenkins/workspace/Bootcamp Case Study CI-CD/target/classes/com/Application.class]
+10:51:48.862 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.Application for test class com.TestMessageController
+10:51:49.035 [main] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - @TestExecutionListeners is not present for class [com.TestMessageController]: using defaults.
+10:51:49.036 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+10:51:49.069 [main] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Skipping candidate TestExecutionListener [org.springframework.test.context.transaction.TransactionalTestExecutionListener] due to a missing dependency. Specify custom listener classes or make the default listener classes and their required dependencies available. Offending class: [org/springframework/transaction/TransactionDefinition]
+10:51:49.078 [main] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Skipping candidate TestExecutionListener [org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener] due to a missing dependency. Specify custom listener classes or make the default listener classes and their required dependencies available. Offending class: [org/springframework/transaction/interceptor/TransactionAttribute]
+10:51:49.079 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@7c1e2a9e, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@fa36558, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@672872e1, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@32910148, org.springframework.test.context.support.DirtiesContextTestExecutionListener@3f56875e, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@2b4bac49, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@fd07cbb, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@3571b748, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@3e96bacf, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@484970b0]
+10:51:49.091 [main] DEBUG org.springframework.test.context.support.AbstractDirtiesContextTestExecutionListener - Before test class: context [DefaultTestContext@45ca843 testClass = TestMessageController, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@11c9af63 testClass = TestMessageController, locations = '{}', classes = '{class com.Application}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@52aa2946, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@5d47c63f, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@20d3d15a, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@358c99f5], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -> true]], class annotated with @DirtiesContext [false] with mode [null].
+10:51:49.176 [main] DEBUG org.springframework.test.context.support.TestPropertySourceUtils - Adding inlined properties to environment: {spring.jmx.enabled=false, org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true, server.port=-1}
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.1.7.RELEASE)
+
+2021-06-04 10:51:49.852  INFO 2662 --- [           main] com.TestMessageController                : Starting TestMessageController on jenkins-master with PID 2662 (started by jenkins in /var/lib/jenkins/workspace/Bootcamp Case Study CI-CD)
+2021-06-04 10:51:49.861  INFO 2662 --- [           main] com.TestMessageController                : No active profile set, falling back to default profiles: default
+2021-06-04 10:51:54.575  INFO 2662 --- [           main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-06-04 10:51:54.775  INFO 2662 --- [           main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2021-06-04 10:51:55.191  INFO 2662 --- [           main] com.TestMessageController                : Started TestMessageController in 5.938 seconds (JVM running for 8.126)
+2021-06-04 10:51:55.850  INFO 2662 --- [           main] com.MessageController                    : hello, its an info
+2021-06-04 10:51:55.883  INFO 2662 --- [           main] com.MessageController                    : hello from test app1
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.654 s - in com.TestMessageController
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- maven-jar-plugin:3.1.2:jar (default-jar) @ bootcamp ---
+[INFO] Building jar: /var/lib/jenkins/workspace/Bootcamp Case Study CI-CD/target/bootcamp-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- spring-boot-maven-plugin:2.1.7.RELEASE:repackage (repackage) @ bootcamp ---
+[INFO] Replacing main artifact with repackaged archive
+[INFO] 
+[INFO] --- spring-boot-maven-plugin:2.1.7.RELEASE:repackage (default) @ bootcamp ---
+[INFO] Replacing main artifact with repackaged archive
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  04:58 min
+[INFO] Finished at: 2021-06-04T10:56:41Z
+[INFO] ------------------------------------------------------------------------
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (surefire test)
+[Pipeline] sh
++ /var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation/myMaven/bin/mvn surefire-report:report
+[INFO] Scanning for projects...
+[WARNING] The POM for org.eclipse.m2e:lifecycle-mapping:jar:1.0.0 is missing, no dependency information available
+[WARNING] Failed to retrieve plugin descriptor for org.eclipse.m2e:lifecycle-mapping:1.0.0: Plugin org.eclipse.m2e:lifecycle-mapping:1.0.0 or one of its dependencies could not be resolved: org.eclipse.m2e:lifecycle-mapping:jar:1.0.0 was not found in https://repo.maven.apache.org/maven2 during a previous attempt. This failure was cached in the local repository and resolution is not reattempted until the update interval of central has elapsed or updates are forced
+[INFO] 
+[INFO] -----------------------< com.casestudy:bootcamp >-----------------------
+[INFO] Building bootcamp 0.0.1-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[WARNING] The POM for org.eclipse.m2e:lifecycle-mapping:jar:1.0.0 is missing, no dependency information available
+[WARNING] Failed to retrieve plugin descriptor for org.eclipse.m2e:lifecycle-mapping:1.0.0: Plugin org.eclipse.m2e:lifecycle-mapping:1.0.0 or one of its dependencies could not be resolved: org.eclipse.m2e:lifecycle-mapping:jar:1.0.0 was not found in https://repo.maven.apache.org/maven2 during a previous attempt. This failure was cached in the local repository and resolution is not reattempted until the update interval of central has elapsed or updates are forced
+[INFO] 
+[INFO] >>> maven-surefire-report-plugin:3.0.0-M5:report (default-cli) > [surefire]test @ bootcamp >>>
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:resources (default-resources) @ bootcamp ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.1:compile (default-compile) @ bootcamp ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:testResources (default-testResources) @ bootcamp ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /var/lib/jenkins/workspace/Bootcamp Case Study CI-CD/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.1:testCompile (default-testCompile) @ bootcamp ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.22.2:test (default-test) @ bootcamp ---
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.TestMessageController
+10:56:49.357 [main] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
+10:56:49.383 [main] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
+10:56:49.420 [main] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [com.TestMessageController] from class [org.springframework.boot.test.context.SpringBootTestContextBootstrapper]
+10:56:49.461 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.TestMessageController], using SpringBootContextLoader
+10:56:49.468 [main] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.TestMessageController]: class path resource [com/TestMessageController-context.xml] does not exist
+10:56:49.469 [main] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.TestMessageController]: class path resource [com/TestMessageControllerContext.groovy] does not exist
+10:56:49.470 [main] INFO org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [com.TestMessageController]: no resource found for suffixes {-context.xml, Context.groovy}.
+10:56:49.480 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.TestMessageController]: TestMessageController does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+10:56:49.573 [main] DEBUG org.springframework.test.context.support.ActiveProfilesUtils - Could not find an 'annotation declaring class' for annotation type [org.springframework.test.context.ActiveProfiles] and class [com.TestMessageController]
+10:56:49.773 [main] DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider - Identified candidate component class: file [/var/lib/jenkins/workspace/Bootcamp Case Study CI-CD/target/classes/com/Application.class]
+10:56:49.785 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.Application for test class com.TestMessageController
+10:56:49.949 [main] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - @TestExecutionListeners is not present for class [com.TestMessageController]: using defaults.
+10:56:49.951 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+10:56:49.976 [main] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Skipping candidate TestExecutionListener [org.springframework.test.context.transaction.TransactionalTestExecutionListener] due to a missing dependency. Specify custom listener classes or make the default listener classes and their required dependencies available. Offending class: [org/springframework/transaction/interceptor/TransactionAttributeSource]
+10:56:49.983 [main] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Skipping candidate TestExecutionListener [org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener] due to a missing dependency. Specify custom listener classes or make the default listener classes and their required dependencies available. Offending class: [org/springframework/transaction/interceptor/TransactionAttribute]
+10:56:49.984 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@6236eb5f, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@7c1e2a9e, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@fa36558, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@672872e1, org.springframework.test.context.support.DirtiesContextTestExecutionListener@32910148, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@3f56875e, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@2b4bac49, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@fd07cbb, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@3571b748, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@3e96bacf]
+10:56:49.991 [main] DEBUG org.springframework.test.context.support.AbstractDirtiesContextTestExecutionListener - Before test class: context [DefaultTestContext@1d8bd0de testClass = TestMessageController, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@45ca843 testClass = TestMessageController, locations = '{}', classes = '{class com.Application}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@75f9eccc, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@67e2d983, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@214b199c, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@53ca01a2], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -> true]], class annotated with @DirtiesContext [false] with mode [null].
+10:56:50.056 [main] DEBUG org.springframework.test.context.support.TestPropertySourceUtils - Adding inlined properties to environment: {spring.jmx.enabled=false, org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true, server.port=-1}
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.1.7.RELEASE)
+
+2021-06-04 10:56:50.666  INFO 2896 --- [           main] com.TestMessageController                : Starting TestMessageController on jenkins-master with PID 2896 (started by jenkins in /var/lib/jenkins/workspace/Bootcamp Case Study CI-CD)
+2021-06-04 10:56:50.672  INFO 2896 --- [           main] com.TestMessageController                : No active profile set, falling back to default profiles: default
+2021-06-04 10:56:55.336  INFO 2896 --- [           main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-06-04 10:56:55.528  INFO 2896 --- [           main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2021-06-04 10:56:55.881  INFO 2896 --- [           main] com.TestMessageController                : Started TestMessageController in 5.8 seconds (JVM running for 7.748)
+2021-06-04 10:56:56.303  INFO 2896 --- [           main] com.MessageController                    : hello, its an info
+2021-06-04 10:56:56.328  INFO 2896 --- [           main] com.MessageController                    : hello from test app1
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.142 s - in com.TestMessageController
+2021-06-04 10:56:56.423  INFO 2896 --- [       Thread-2] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] <<< maven-surefire-report-plugin:3.0.0-M5:report (default-cli) < [surefire]test @ bootcamp <<<
+[INFO] 
+[INFO] 
+[INFO] --- maven-surefire-report-plugin:3.0.0-M5:report (default-cli) @ bootcamp ---
+[WARNING] Unable to locate Test Source XRef to link to - DISABLED
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  13.466 s
+[INFO] Finished at: 2021-06-04T10:56:57Z
+[INFO] ------------------------------------------------------------------------
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (publish surefire html report)
+[Pipeline] echo
+Publish HTML Surefire Report for Junit
+[Pipeline] publishHTML
+[htmlpublisher] Archiving HTML reports...
+[htmlpublisher] Archiving at BUILD level /var/lib/jenkins/workspace/Bootcamp Case Study CI-CD/target/site to /var/lib/jenkins/jobs/Bootcamp Case Study CI-CD/builds/3/htmlreports/HTML_20Surefire_20Report
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (build docker image)
+[Pipeline] echo
+Build Docker image from Dockerfile
+[Pipeline] sh
++ sudo /var/lib/jenkins/tools/org.jenkinsci.plugins.docker.commons.tools.DockerTool/myDocker/bin/docker build -t mdanwarjamal/bootcamp10-case-study:2.0 .
+Sending build context to Docker daemon  17.58MB
+
+Step 1/5 : FROM openjdk:8-alpine
+ ---> a3562aa0b991
+Step 2/5 : LABEL version="2.0" author="Md Anwar Jamal" desc="Case Study Spring Boot Application"
+ ---> Running in 146deadccbc1
+Removing intermediate container 146deadccbc1
+ ---> 604cb7361027
+Step 3/5 : COPY target/bootcamp-0.0.1-SNAPSHOT.jar /usr/local/app/bootcamp.jar
+ ---> 5af80369d23a
+Step 4/5 : WORKDIR /usr/local/app
+ ---> Running in d177d026d11e
+Removing intermediate container d177d026d11e
+ ---> c5a8ca4cd2bd
+Step 5/5 : ENTRYPOINT [ "java", "-jar", "bootcamp.jar" ]
+ ---> Running in 337c55202b4e
+Removing intermediate container 337c55202b4e
+ ---> cfd6ecdf6f1d
+Successfully built cfd6ecdf6f1d
+Successfully tagged mdanwarjamal/bootcamp10-case-study:2.0
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Push to DockerHub)
+[Pipeline] echo
+Push Docker Image to DockerHub Online Registry
+[Pipeline] withCredentials
+Masking supported pattern matches of $dockerHubPwd
+[Pipeline] {
+[Pipeline] sh
+Warning: A secret was passed to "sh" using Groovy String interpolation, which is insecure.
+		 Affected argument(s) used the following variable(s): [dockerHubUsername, dockerHubPwd]
+		 See https://jenkins.io/redirect/groovy-string-interpolation for details.
++ sudo /var/lib/jenkins/tools/org.jenkinsci.plugins.docker.commons.tools.DockerTool/myDocker/bin/docker login -u mdanwarjamal -p ****
+Login Succeeded
+[Pipeline] sh
+Warning: A secret was passed to "sh" using Groovy String interpolation, which is insecure.
+		 Affected argument(s) used the following variable(s): [dockerHubUsername]
+		 See https://jenkins.io/redirect/groovy-string-interpolation for details.
++ sudo /var/lib/jenkins/tools/org.jenkinsci.plugins.docker.commons.tools.DockerTool/myDocker/bin/docker push mdanwarjamal/bootcamp10-case-study:2.0
+The push refers to repository [docker.io/mdanwarjamal/bootcamp10-case-study]
+0d072dc1c19d: Preparing
+ceaf9e1ebef5: Preparing
+9b9b7f3d56a0: Preparing
+f1b5933fe4b5: Preparing
+f1b5933fe4b5: Layer already exists
+9b9b7f3d56a0: Layer already exists
+ceaf9e1ebef5: Layer already exists
+0d072dc1c19d: Pushed
+2.0: digest: sha256:805b3e883d331531dfc944b00a61b37d14286539e0e3d0fdb27342b22072fee0 size: 1159
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy Application using Ansible)
+[Pipeline] echo
+Install Docker in Ansible host machines
+[Pipeline] echo
+deploying spring application
+[Pipeline] ansiblePlaybook
+[Bootcamp Case Study CI-CD] $ /usr/bin/ansible-playbook deployment.yml -i myInventory --private-key "/var/lib/jenkins/workspace/Bootcamp Case Study CI-CD/ssh4865485783036879422.key" -u mdanwarjamal
+
+PLAY [all] *********************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [172.31.43.188]
+ok: [172.31.47.244]
+
+TASK [Installing Docker] *******************************************************
+ok: [172.31.43.188]
+ok: [172.31.47.244]
+
+TASK [Starting Docker Service] *************************************************
+changed: [172.31.43.188]
+changed: [172.31.47.244]
+
+TASK [Pulling Docker Image from DockerHub] *************************************
+[WARNING]: Consider using 'become', 'become_method', and 'become_user' rather
+than running sudo
+changed: [172.31.47.244]
+changed: [172.31.43.188]
+
+TASK [Deploying Spring Boot Application] ***************************************
+changed: [172.31.43.188]
+changed: [172.31.47.244]
+
+PLAY RECAP *********************************************************************
+172.31.43.188              : ok=5    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+172.31.47.244              : ok=5    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Send mail on success)
+[Pipeline] echo
+Deployment was successful
+[Pipeline] emailext
+Sending email to: cse.mdanwarjamal@gmail.com
