@@ -17,12 +17,11 @@ try{
                 dockerImage = "mdanwarjamal/bootcamp10-case-study"
                 tagName = "1.0"
                 gitURL = "https://github.com/mdanwarjamal"
-                gitSSH = "git@github.com:mdanwarjamal"
                 projectName = "bootcamp10-case-study"
             }
             stage('checkout'){
                 echo "Checkout Application Code from GitHub Repository"
-                git branch: 'main', credentialsId: 'GitHubSSH', url: "${gitSSH}/${projectName}.git"
+                git branch: 'feature/htmlReport', credentialsId: 'GitHub', url: "${gitURL}/${projectName}.git"
             }
             stage('build'){
                 echo "Build Application Code"
