@@ -15,7 +15,7 @@ try{
                 maven = tool name: 'myMaven', type: 'maven'
                 mavenCMD = "${maven}/bin/mvn"
                 dockerImage = "mdanwarjamal/bootcamp10-case-study"
-                tagName = "1.0"
+                tagName = "2.0"
                 gitURL = "https://github.com/mdanwarjamal"
                 projectName = "bootcamp10-case-study"
             }
@@ -31,13 +31,8 @@ try{
                 echo "Generate jar file for Application"
                 sh "${mavenCMD} clean package"
             }
-	    stage('sonarqube'){
-		withSonarQubeEnv('sonarqube') {
-			sh "${mavenCMD} sonar:sonar"
-		}
-	    }
 	    stage('surefire test'){
-		    sh "${mavenCMD} surefire-report:report"
+		sh "${mavenCMD} surefire-report:report"
 	    }
 	    stage('publish surefire html report'){
                 echo "Publish HTML Surefire Report for Junit"
