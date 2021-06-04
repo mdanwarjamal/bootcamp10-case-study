@@ -31,10 +31,6 @@ try{
                 echo "Generate jar file for Application"
                 sh "${mavenCMD} clean package"
             }
-	    stage('test'){
-		echo "Test Application Code"
-		sh "${mavenCMD} test"
-            }
 	    stage('surefire test'){
 		    sh "${mavenCMD} surefire-report:report"
 	    }
